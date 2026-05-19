@@ -1,0 +1,260 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .fb-wrap { font-family: 'DM Sans', sans-serif; padding: 2rem 1.5rem; max-width: 680px; }
+  .fb-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 6px; }
+  .fb-title { font-family: 'DM Serif Display', serif; font-size: 26px; font-weight: 400; color: var(--color-text-primary); line-height: 1.25; margin-bottom: 8px; }
+  .fb-subtitle { font-size: 14px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 1.5rem; }
+  .bonus-nudge { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary); border-left: 3px solid #B85042; border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 10px 14px; margin-bottom: 1.75rem; display: flex; align-items: flex-start; gap: 10px; }
+  .bonus-nudge i { color: #B85042; font-size: 18px; margin-top: 1px; flex-shrink: 0; }
+  .bonus-nudge p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.55; }
+  .bonus-nudge strong { color: var(--color-text-primary); font-weight: 500; }
+  .field-label { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; display: block; }
+  .category-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 1.5rem; }
+  .tab-btn { padding: 10px 8px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: var(--color-background-primary); cursor: pointer; text-align: center; transition: all 0.15s ease; font-family: 'DM Sans', sans-serif; }
+  .tab-btn:hover { background: var(--color-background-secondary); }
+  .tab-btn.active { border-color: #3C3489; border-width: 1.5px; background: #EEEDFE; }
+  .tab-icon { font-size: 20px; margin-bottom: 4px; display: block; }
+  .tab-btn.active .tab-icon { color: #3C3489; }
+  .tab-label { font-size: 11.5px; font-weight: 500; line-height: 1.3; color: var(--color-text-secondary); }
+  .tab-btn.active .tab-label { color: #3C3489; }
+  .category-desc { font-size: 13px; color: var(--color-text-tertiary); margin-bottom: 1rem; min-height: 36px; line-height: 1.55; padding: 0 2px; }
+  .session-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1.5rem; }
+  .session-btn { padding: 9px 6px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: var(--color-background-primary); cursor: pointer; text-align: center; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 400; color: var(--color-text-secondary); transition: all 0.15s; }
+  .session-btn:hover { background: var(--color-background-secondary); }
+  .session-btn.active { border-color: #3C3489; border-width: 1.5px; background: #EEEDFE; color: #3C3489; font-weight: 500; }
+  .session-btn.any { font-style: italic; }
+  .fb-textarea { width: 100%; min-height: 120px; padding: 12px 14px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); font-family: 'DM Sans', sans-serif; font-size: 14px; line-height: 1.6; color: var(--color-text-primary); background: var(--color-background-primary); resize: vertical; transition: border-color 0.15s; margin-bottom: 6px; }
+  .fb-textarea:focus { outline: none; border-color: #7F77DD; box-shadow: 0 0 0 3px #EEEDFE; }
+  .char-count { font-size: 12px; color: var(--color-text-tertiary); text-align: right; margin-bottom: 1.25rem; }
+  .char-count.warn { color: #BA7517; }
+  .name-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; margin-bottom: 1.5rem; }
+  .name-input-wrap input { width: 100%; padding: 10px 14px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--color-text-primary); background: var(--color-background-primary); }
+  .name-input-wrap input:focus { outline: none; border-color: #7F77DD; box-shadow: 0 0 0 3px #EEEDFE; }
+  .anon-toggle { display: flex; align-items: center; gap: 8px; white-space: nowrap; cursor: pointer; font-size: 13px; color: var(--color-text-secondary); user-select: none; padding: 10px 14px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: var(--color-background-primary); transition: background 0.15s; }
+  .anon-toggle.checked { background: #EEEDFE; border-color: #7F77DD; color: #3C3489; }
+  .anon-toggle i { font-size: 16px; }
+  .submit-btn { width: 100%; padding: 13px; background: #3C3489; color: #EEEDFE; border: none; border-radius: var(--border-radius-md); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.15s, transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .submit-btn:hover { background: #534AB7; }
+  .submit-btn:active { transform: scale(0.99); }
+  .submit-btn:disabled { background: var(--color-background-secondary); color: var(--color-text-tertiary); cursor: not-allowed; }
+  .error-msg { background: #FCEBEB; border: 0.5px solid #F7C1C1; border-radius: var(--border-radius-md); padding: 10px 14px; font-size: 13px; color: #791F1F; margin-bottom: 1rem; display: none; align-items: center; gap: 8px; }
+  .divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 1.25rem 0; }
+  .success-state { display: none; text-align: center; padding: 3rem 2rem; }
+  .success-icon { width: 56px; height: 56px; border-radius: 50%; background: #EAF3DE; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+  .success-icon i { font-size: 28px; color: #3B6D11; }
+  .success-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--color-text-primary); margin-bottom: 8px; }
+  .success-sub { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 1.5rem; line-height: 1.6; }
+</style>
+
+<div class="fb-wrap">
+  <h2 class="sr-only">Student feedback form with category and session selectors</h2>
+
+  <div class="fb-eyebrow">Course feedback</div>
+  <h1 class="fb-title">Share your thoughts</h1>
+  <p class="fb-subtitle">Select a category and session, then leave your comment. Submissions are anonymous by default.</p>
+
+  <div class="bonus-nudge" role="note">
+    <i class="ti ti-award" aria-hidden="true"></i>
+    <p><strong>Bonus points opportunity:</strong> Thoughtful, substantive feedback may earn bonus points — but only if you include your name so we can credit you.</p>
+  </div>
+
+  <div id="form-area">
+    <label class="field-label">Feedback category</label>
+    <div class="category-tabs" role="tablist" aria-label="Feedback category">
+      <button class="tab-btn active" onclick="selectTab(0)" role="tab" aria-selected="true">
+        <span class="tab-icon"><i class="ti ti-briefcase" aria-hidden="true"></i></span>
+        <span class="tab-label">Job market questions</span>
+      </button>
+      <button class="tab-btn" onclick="selectTab(1)" role="tab" aria-selected="false">
+        <span class="tab-icon"><i class="ti ti-book" aria-hidden="true"></i></span>
+        <span class="tab-label">Request for content</span>
+      </button>
+      <button class="tab-btn" onclick="selectTab(2)" role="tab" aria-selected="false">
+        <span class="tab-icon"><i class="ti ti-message-circle" aria-hidden="true"></i></span>
+        <span class="tab-label">Feedback to instructor</span>
+      </button>
+    </div>
+
+    <p class="category-desc" id="cat-desc">Ask about job searching, interviews, networking, salary negotiation, or anything career-related.</p>
+
+    <label class="field-label">Related session <span style="font-weight:400; text-transform:none; letter-spacing:0; color:var(--color-text-tertiary); font-size:11px;">(optional)</span></label>
+    <div class="session-grid" role="group" aria-label="Select a session">
+      <button class="session-btn any active" onclick="selectSession(0)" aria-pressed="true">Not specific</button>
+      <button class="session-btn" onclick="selectSession(1)" aria-pressed="false">Class 1</button>
+      <button class="session-btn" onclick="selectSession(2)" aria-pressed="false">Class 2</button>
+      <button class="session-btn" onclick="selectSession(3)" aria-pressed="false">Class 3</button>
+      <button class="session-btn" onclick="selectSession(4)" aria-pressed="false">Class 4</button>
+      <button class="session-btn" onclick="selectSession(5)" aria-pressed="false">Class 5</button>
+      <button class="session-btn" onclick="selectSession(6)" aria-pressed="false">Class 6</button>
+      <button class="session-btn" onclick="selectSession(7)" aria-pressed="false">Class 7</button>
+    </div>
+
+    <label class="field-label" for="fb-text">Your comment</label>
+    <textarea class="fb-textarea" id="fb-text" placeholder="Type your comment here…" maxlength="1000" oninput="updateChar()"></textarea>
+    <p class="char-count" id="char-count">0 / 1000</p>
+
+    <hr class="divider">
+
+    <div class="name-row">
+      <div class="name-input-wrap">
+        <input type="text" id="student-name" placeholder="Your name (optional)" aria-label="Your name" disabled>
+      </div>
+      <button class="anon-toggle checked" id="anon-btn" onclick="toggleAnon()" aria-pressed="true">
+        <i class="ti ti-user-off" id="anon-icon" aria-hidden="true"></i>
+        <span id="anon-label">Anonymous</span>
+      </button>
+    </div>
+
+    <div class="error-msg" id="error-msg">
+      <i class="ti ti-alert-circle" aria-hidden="true"></i>
+      <span id="error-text">Please write something before submitting.</span>
+    </div>
+
+    <button class="submit-btn" id="submit-btn" onclick="submitFeedback()">
+      <i class="ti ti-send" aria-hidden="true"></i>
+      Submit feedback
+    </button>
+  </div>
+
+  <div class="success-state" id="success-state">
+    <div class="success-icon"><i class="ti ti-check" aria-hidden="true"></i></div>
+    <h2 class="success-title">Feedback received</h2>
+    <p class="success-sub" id="success-sub">Thank you — your response has been recorded.</p>
+    <button class="submit-btn" style="max-width:200px; margin: 0 auto;" onclick="resetForm()">
+      <i class="ti ti-plus" aria-hidden="true"></i>
+      Submit another
+    </button>
+  </div>
+</div>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyjQd1EsmRy5jeIAGAQjDHjB8l5xxJ7BsLhIHm-anb8aZjGzzEPHr4yDAZMjxBEJZm9-Q/exec';
+
+const categories = [
+  { label: 'Job Market Questions', desc: 'Ask about job searching, interviews, networking, salary negotiation, or anything career-related.', placeholder: 'E.g. What should I focus on for software engineering interviews right now?' },
+  { label: 'Request for Content', desc: 'Suggest topics, readings, case studies, or exercises you\'d like covered in upcoming classes.', placeholder: 'E.g. I\'d love more examples of how to structure a consulting presentation…' },
+  { label: 'Feedback to Instructor', desc: 'Share what\'s working, what could improve, pacing feedback, or anything on your mind about the course.', placeholder: 'E.g. The live coding sessions are really helpful — more of those would be great.' }
+];
+
+let activeTab = 0;
+let activeSession = 0;
+let isAnon = true;
+
+function selectTab(idx) {
+  activeTab = idx;
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+    b.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+  });
+  document.getElementById('cat-desc').textContent = categories[idx].desc;
+  document.getElementById('fb-text').placeholder = categories[idx].placeholder;
+}
+
+function selectSession(idx) {
+  activeSession = idx;
+  document.querySelectorAll('.session-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+    b.setAttribute('aria-pressed', i === idx ? 'true' : 'false');
+  });
+}
+
+function toggleAnon() {
+  isAnon = !isAnon;
+  const btn = document.getElementById('anon-btn');
+  const nameInput = document.getElementById('student-name');
+  btn.classList.toggle('checked', isAnon);
+  btn.setAttribute('aria-pressed', isAnon ? 'true' : 'false');
+  document.getElementById('anon-icon').className = isAnon ? 'ti ti-user-off' : 'ti ti-user';
+  document.getElementById('anon-label').textContent = isAnon ? 'Anonymous' : 'Named';
+  nameInput.disabled = isAnon;
+  if (isAnon) nameInput.value = '';
+}
+
+function updateChar() {
+  const len = document.getElementById('fb-text').value.length;
+  const el = document.getElementById('char-count');
+  el.textContent = len + ' / 1000';
+  el.classList.toggle('warn', len > 800);
+}
+
+async function submitFeedback() {
+  const text = document.getElementById('fb-text').value.trim();
+  const errEl = document.getElementById('error-msg');
+  const errTxt = document.getElementById('error-text');
+
+  if (!text) {
+    errTxt.textContent = 'Please write something before submitting.';
+    errEl.style.display = 'flex';
+    return;
+  }
+  errEl.style.display = 'none';
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="ti ti-loader" aria-hidden="true"></i> Submitting…';
+
+  const name = isAnon ? 'Anonymous' : (document.getElementById('student-name').value.trim() || 'Anonymous');
+  const sessionLabel = activeSession === 0 ? 'Not specific' : 'Class ' + activeSession;
+
+  const payload = {
+    timestamp: new Date().toISOString(),
+    category: categories[activeTab].label,
+    session: sessionLabel,
+    comment: text,
+    name: name
+  };
+
+  if (SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+    await new Promise(r => setTimeout(r, 800));
+    showSuccess(name, sessionLabel);
+    return;
+  }
+
+  try {
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    showSuccess(name, sessionLabel);
+  } catch (e) {
+    errTxt.textContent = 'Something went wrong. Please try again.';
+    errEl.style.display = 'flex';
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ti ti-send" aria-hidden="true"></i> Submit feedback';
+  }
+}
+
+function showSuccess(name, session) {
+  document.getElementById('form-area').style.display = 'none';
+  document.getElementById('success-state').style.display = 'block';
+  const named = name !== 'Anonymous';
+  const sessionNote = session !== 'Not specific' ? ` regarding ${session}` : '';
+  document.getElementById('success-sub').textContent = named
+    ? `Thanks, ${name}! Your feedback${sessionNote} has been recorded and may be eligible for bonus points.`
+    : `Your anonymous response${sessionNote} has been recorded. Leave your name next time to be eligible for bonus points!`;
+}
+
+function resetForm() {
+  activeTab = 0; activeSession = 0; isAnon = true;
+  document.getElementById('fb-text').value = '';
+  document.getElementById('student-name').value = '';
+  document.getElementById('student-name').disabled = true;
+  document.getElementById('char-count').textContent = '0 / 1000';
+  document.getElementById('error-msg').style.display = 'none';
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = false;
+  btn.innerHTML = '<i class="ti ti-send" aria-hidden="true"></i> Submit feedback';
+  const anonBtn = document.getElementById('anon-btn');
+  anonBtn.classList.add('checked');
+  document.getElementById('anon-icon').className = 'ti ti-user-off';
+  document.getElementById('anon-label').textContent = 'Anonymous';
+  selectTab(0);
+  selectSession(0);
+  document.getElementById('success-state').style.display = 'none';
+  document.getElementById('form-area').style.display = 'block';
+}
+</script>
